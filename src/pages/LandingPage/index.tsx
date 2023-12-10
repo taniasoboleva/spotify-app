@@ -33,17 +33,17 @@ const LandingPage = () => {
         } catch(error) {
             console.error(error);
         }
-      };
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(handleSearch(e.target.value));
     }
 
     useEffect(() => {
-        if (!spotifyData.cardsData?.artists?.length) {
+        if (!spotifyData.cardsData) {
             dispatch(generateTokenApi());
         }
-    }, [!spotifyData.cardsData?.artists?.length]);
+    }, [!spotifyData.cardsData]);
 
     return (
         <>

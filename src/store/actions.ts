@@ -28,7 +28,6 @@ export const cardsDataSlice = createSlice({
         },
         viewMore: (state, action) => {
             state.detailItem = action.payload;
-            state.loading = true; 
         },
     },
     extraReducers: (builder) => {
