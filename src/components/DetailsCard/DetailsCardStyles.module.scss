@@ -1,0 +1,22 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border: 30px double black;
+    align-items: center;
+    width: fit-content;
+    background: antiquewhite;
+}
+
+.detailsText {
+    text-align: center;
+}
+
+.releaseText {
+    font-weight: 300;
+}
+
+.link {
+    font-weight: 100;
+    cursor: pointer;
+}

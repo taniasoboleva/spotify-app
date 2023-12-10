@@ -1,0 +1,15 @@
+.listContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 32px;
+    text-align: center;
+    margin: 24px;
+}
+
+.cardContainer {
+    display: inline-grid;
+    background: #FFFFFF;
+    margin: 24px;
+    padding: 12px;
+    border: 10px double #000000;
+}
