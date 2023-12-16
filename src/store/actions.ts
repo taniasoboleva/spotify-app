@@ -29,6 +29,9 @@ export const cardsDataSlice = createSlice({
         viewMore: (state, action) => {
             state.detailItem = action.payload;
         },
+        isLoading: (state, action) => {
+            state.loading = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder 
@@ -46,6 +49,6 @@ export const cardsDataSlice = createSlice({
     }
 })
 
-export const { handleSearch, viewMore } = cardsDataSlice.actions;
+export const { handleSearch, viewMore, isLoading } = cardsDataSlice.actions;
 
 export default cardsDataSlice.reducer;

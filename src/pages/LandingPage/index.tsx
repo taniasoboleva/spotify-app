@@ -6,23 +6,25 @@ import Loading from '../../components/Loading';
 import SearchComponent from '../../components/SearchComponent';
 import { SpotifyDataState, handleSearch, viewMore } from '../../store/actions';
 import { fetchWebApiData, generateTokenApi } from '../../store/asyncThunks';
-import { AppDispatch } from '../../store/store';
+import { AppDispatch, RootState } from '../../store/store';
 import s from './LandingPageStyles.module.scss';
+
+const SPOTIFY_LOGO_URL = 'https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Black.png';
 
 const LandingPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
-    const { spotifyData } = useSelector(
-        (state: SpotifyDataState) => state,
+    const { cardsData, loading, token, searchValue } = useSelector(
+        (state: RootState) => state.spotifyData,
         shallowEqual
     );
 
-    const searchResult: SpotifyDataState['searchValue'] = spotifyData.searchValue;
+    const searchResult: SpotifyDataState['searchValue'] = searchValue;
 
     const handleSubmit = () => {
-        if (searchResult.length > 0) {
-            dispatch(fetchWebApiData({token: spotifyData.token, searchResult}));
+        if (searchValue.length > 0) {
+            dispatch(fetchWebApiData({token: token, searchResult}));
         }
     }
 
@@ -40,18 +42,22 @@ const LandingPage = () => {
     }
 
     useEffect(() => {
-        if (!spotifyData.cardsData) {
+        if (!cardsData) {
             dispatch(generateTokenApi());
         }
-    }, [!spotifyData.cardsData]);
+    }, [!cardsData]);
 
     return (
         <>
-            {spotifyData.loading ? <Loading /> : (
+            {loading ? <Loading /> : (
             <div className={s.container}>
-                <img className={s.logo} src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Black.png" alt="logo" />
-                <SearchComponent handleSubmit={handleSubmit} searchValue={searchResult} handleChange={handleChange} />
-                <SpotifyCardList cardsData={spotifyData.cardsData} handleViewMore={handleViewMore} />
+                <img 
+                    className={s.logo}
+                    src={SPOTIFY_LOGO_URL}
+                    alt="logo"
+                />
+                <SearchComponent handleSubmit={handleSubmit} handleChange={handleChange} />
+                <SpotifyCardList handleViewMore={handleViewMore} />
             </div>
             )}
         </>

@@ -1,47 +1,62 @@
-//@ts-nocheck
-import { T_AlbumsItems, T_ArtistItems, T_TrackItems } from '../../types/types';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { isLoading } from '../../store/actions';
+import { RootState } from '../../store/store';
 import s from './DetailsCardStyles.module.scss';
 
-interface I_DetailCardProps {
-    detailItem: T_TrackItems | T_AlbumsItems | T_ArtistItems;
-}
+const DetailsCard: React.FC = () => {
+    const { id, title } = useParams();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-const DetailsCard: React.FC<I_DetailCardProps> = ({detailItem}) => {
+    const cardsData = useSelector((state: RootState) => state.spotifyData.cardsData);
+
+    const urlTitleParam = cardsData && cardsData[title];
+    const itemToDisplay: any = urlTitleParam?.items?.find(item => item.id === id);
+
+    useEffect(() => {
+        if (!cardsData) {
+            dispatch(isLoading(true));
+            navigate('/');
+        }
+    }, [cardsData]);
+
     return (
         <div>
             <h2 className={s.detailsText}>Details</h2>
             <div className={s.card}>
-                {detailItem?.images &&
+                {itemToDisplay?.images &&
                     <div>
-                        <img src={detailItem.images[1].url} />
+                        <img src={itemToDisplay.images[1].url} />
                     </div>
                 }
-                {detailItem?.album?.images &&
+                {itemToDisplay?.album?.images &&
                     <div>
-                        <img src={detailItem.album.images[1].url} />
+                        <img src={itemToDisplay.album.images[1].url} />
                     </div>
                 }
-                {detailItem?.followers && 
+                {itemToDisplay?.followers && 
                     <div className={s.releaseText}>
-                        {`Followers: ${detailItem.followers.total}`}
+                        {`Followers: ${itemToDisplay.followers.total}`}
                     </div>
                 }
                 <div>
-                    {`Artist: ${detailItem?.name}`}
+                    {`Artist: ${itemToDisplay?.name}`}
                 </div>
-                {detailItem?.release_date && 
+                {itemToDisplay?.release_date && 
                     <div>
-                        {`Release date: ${detailItem.release_date}`}
+                        {`Release date: ${itemToDisplay.release_date}`}
                     </div>
                 }
-                {detailItem?.total_tracks && 
+                {itemToDisplay?.total_tracks && 
                     <div>
-                        {`Release date: ${detailItem.total_tracks}`}
+                        {`Release date: ${itemToDisplay.total_tracks}`}
                     </div>
                 }
-                {detailItem?.popularity && 
+                {itemToDisplay?.popularity && 
                     <div>
-                        {`Popularity: ${detailItem.popularity}`}
+                        {`Popularity: ${itemToDisplay.popularity}`}
                     </div>
                 }
             </div>

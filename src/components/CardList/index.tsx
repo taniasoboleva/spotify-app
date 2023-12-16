@@ -1,14 +1,15 @@
-import { T_Response } from '../../types/types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 import CardItem from '../CardItem';
 import s from './CardListStyles.module.scss';
 
 interface I_SpotifyCardListProps {
-    cardsData: T_Response;
     handleViewMore: (title: string, id: string) => void;
 }
 
-const SpotifyCardList: React.FC<I_SpotifyCardListProps> = ({cardsData, handleViewMore}) => {
-
+const SpotifyCardList: React.FC<I_SpotifyCardListProps> = ({handleViewMore}) => {
+    const cardsData = useSelector((state: RootState) => state.spotifyData.cardsData);
+    
     return (
         <div className={s.listContainer}>
             {cardsData?.albums?.items.map((albumData) => (
