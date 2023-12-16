@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import SpotifyCardList from '../../components/CardList';
 import Loading from '../../components/Loading';
 import SearchComponent from '../../components/SearchComponent';
-import { handleSearch, SpotifyDataState, viewMore } from '../../store/actions';
+import { SpotifyDataState, handleSearch, viewMore } from '../../store/actions';
 import { fetchWebApiData, generateTokenApi } from '../../store/asyncThunks';
 import { AppDispatch } from '../../store/store';
 import s from './LandingPageStyles.module.scss';
@@ -49,6 +49,7 @@ const LandingPage = () => {
         <>
             {spotifyData.loading ? <Loading /> : (
             <div className={s.container}>
+                <img className={s.logo} src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Black.png" alt="logo" />
                 <SearchComponent handleSubmit={handleSubmit} searchValue={searchResult} handleChange={handleChange} />
                 <SpotifyCardList cardsData={spotifyData.cardsData} handleViewMore={handleViewMore} />
             </div>
