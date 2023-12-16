@@ -2,11 +2,13 @@
 export async function generateToken() {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+    const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
 
     const urlencoded = new URLSearchParams();
     urlencoded.append("grant_type", "client_credentials");
-    urlencoded.append("client_id", "33f18473c9864e51adb9623b94d829aa");
-    urlencoded.append("client_secret", "ac004494f47347b7a42471080a29b36f");
+    urlencoded.append("client_id", CLIENT_ID);
+    urlencoded.append("client_secret", CLIENT_SECRET);
 
     const requestOptions: any = {
         method: 'POST',
